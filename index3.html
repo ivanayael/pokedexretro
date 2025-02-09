@@ -5,12 +5,20 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Pokédex</title>
     <style>
+    
+       * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
         body {
             background-color: #5c0000;
             display: flex;
             justify-content: center;
             align-items: center;
             height: 100vh;
+           
         }
 
         .pokedex-leftside {
@@ -26,19 +34,66 @@
             overflow: hidden;
         }
 
-        .pokedex-rightside {
-            width: 400px;
-            height: 380px;
-            background: linear-gradient(135deg, #000000, #0099ff);
-            border-radius: 20px;
-            box-shadow: 0 10px 10px rgba(0, 0, 0, 0.5);
+
+        .big-red-light-system {
             display: flex;
-            flex-direction: column;
+            justify-content: left;
             padding: 10px;
-            position: relative;
-            overflow: hidden;
+            height: 500px;
+            width: 100%;
+            background-color: #0099ff;
+            gap: 10px;
+            border:8px solid #000000;
+            border-top: #000000;
+            border-right: #000000;
+            border-left: 15px solid blue;
+            border-bottom: 15px solid blue;
+
         }
 
+        .light-big {
+            width: 80px;
+            height: 80px;
+            background-color:#0099ff;
+            border-radius: 50%;
+            border: 8px solid #ffffff;
+            box-shadow: 0 0 20px rgba(0, 47, 255, 0.5);
+            margin-top: 10px;
+        }
+
+        .light-small-red {
+            width: 20px;
+            height: 20px;
+            background-color: red;
+            border-radius: 50%;
+            border: 8px solid rgba(255, 0, 0, 0.5);
+            box-shadow: 0 0 20px rgba(255, 0, 0, 0.5);
+            margin-top: 10px;
+        }
+
+        .light-small-yellow {
+            width: 20px;
+            height: 20px;
+            background-color: yellow;
+            border-radius: 50%;
+            border: 8px solid rgba(255, 230, 0, 0.5);
+            box-shadow: 0 0 20px rgba(255, 230, 0, 0.5);
+            margin-top: 10px;
+        }
+
+        .light-small-green {
+            width: 20px;
+            height: 20px;
+            background-color: limegreen;
+            border-radius: 50%;
+            border: 8px solid rgba(21, 255, 0, 0.5);
+            box-shadow: 0 0 20px rgba(21, 255, 0, 0.5);
+            margin-top: 10px;
+        }
+
+   
+
+   
 
         #search-container {
             width: 100%;
@@ -123,29 +178,64 @@
             transform: scale(1.1);
         }
 
+        .pokedex-rightside {
+            width: 400px;
+            height: 380px;
+            background: linear-gradient(135deg, #000000, #0099ff);
+            border-radius: 20px;
+            box-shadow: 0 10px 10px rgba(0, 0, 0, 0.5);
+            display: flex;
+            flex-direction: column;
+            padding: 10px;
+            position: relative;
+            overflow: hidden;
+        }
+
+
+        .buttons-panel {
+            display: grid;
+            grid-template-columns: repeat(5, 1fr);
+            grid-auto-rows: 20px;
+            margin-top: 10px;
+            margin-left: 75px;
+            max-width: 60%;
+        }
+
+        .buttons-panel button {
+            background-color: #444;
+            cursor: pointer;
+            transition: transform 0.2s, background-color 0.3s;
+        }
+
+        .buttons-panel button:hover {
+            background-color: #1d1d1d;
+            transform: scale(1.1);
+        }
+
 
 
         .info-screen {
-            padding: 90px;
-            box-shadow: inset 0 0 20px rgba(0, 0, 0, 0.5);
-            overflow: hidden;
-            align-items: center;
             width: 200px;  /* Ancho de la pantalla */
             height: 60px; /* Alto de la pantalla */
-            background-color: green;
-            color: black;
-            border-radius: 5px;
+            padding: 90px;
+            border-radius: 20px;
             margin-bottom: 20px;
+            background-color: green;
+            box-shadow: inset 0 0 20px rgba(0, 0, 0, 0.5);
+            color: black;
             display: flex;
             flex-direction: column;
             justify-content: center;
             align-items: center;
+            box-sizing: content-box;
         }
 
         .info-screen p {
-            font-size: 28px;
-            margin-bottom: 10px;
-            font-size: 10px;
+            font-size: 20px;
+            font-family:Arial, Helvetica, sans-serif;
+            width: 100%;
+            text-align: center;
+            margin: 0px;
         }
 
         .info-screen b {
@@ -161,6 +251,8 @@
 
         .types {
             display: flex;
+            justify-content: center;
+            align-items: center;
             gap: 8px;
             margin-top: 10px;
         }
@@ -178,11 +270,7 @@
             font-weight: bold;
         }
 
-     
-
-        
-       
-
+    
         #evolutions {
             display: flex;
             justify-content: center;
@@ -191,25 +279,51 @@
         }
 
         #evolutions img {
-            width: 50px;
-            height: 50px;
+            width: 100px;
+            height: 100px;
         }
+
+
+       
 
     </style>
 </head>
 <body>
     <div class="pokedex-leftside">
+    <div class="big-red-light-system">
+        <div class="light-big"></div>
+        <div class="light-small-red"></div>
+        <div class="light-small-yellow"></div>
+        <div class="light-small-green"></div>
+    </div>
+    <div class="screen-container">
+        <div class="light-tiny-red"></div>
+        <div class="light-tiny-red"></div>
         <div class="screen">
             <img id="pokemon-img" src="" alt="Pokemon">
         </div>
+        <div class="light-smaller-red"></div>
+        <div class="speaker-line"></div>
+        <div class="speaker-line"></div>
+        <div class="speaker-line"></div>
+        <div class="speaker-line"></div>
+    </div>
+    <div class="main-information-display">
+        <button class="turn-on-button" title="turn-on-button"></button>
+        <button class="green-button" title="green-button"></button>
+        <button class="red-button" title="green-button"></button>
         <div class="name-screen">
             <h2 id="pokemon-name">Cargando...</h2>
         </div>
         <div class="buttons">
             <button onclick="prevPokemon()">◀️</button>
+            <button onclick="prevPokemon()">◀️</button>
+            <button onclick="nextPokemon()">▶️</button>
             <button onclick="nextPokemon()">▶️</button>
         </div>
         <p id="error-message" class="error" style="display:none;">¡Pokémon no encontrado!</p>
+    </div>
+      
     </div>
 
     <div class="pokedex-rightside">
@@ -217,19 +331,28 @@
             <input type="text" id="pokemon-search" placeholder="Buscar Pokémon..." onkeyup="searchPokemon(event)">
         </div>
         <div class="info-screen">
+            <p class="types" id="pokemon-types"></p>
             <p id="pokemon-desc">Descripción...</p>
-            <div class="types" id="pokemon-types"></div>
-            <p><b>Altura:</b> <span id="height"></span></p>
-            <p><b>Peso:</b> <span id="weight"></span></p>
+            <p><b>Altura:</b><span id="height"></span></p>
+            <p><b>Peso:</b><span id="weight"></span></p>
         </div>
 
-       
-        <h3>Evoluciones:</h3>
-        <div id="evolutions"></div>
-        <div class="buttons">
+    
+        <div class="buttons-panel">
             <button onclick="" title="Button"></button>
+            <button onclick="" title="Button"></button> 
+            <button onclick="" title="Button"></button> 
+            <button onclick="" title="Button"></button> 
+            <button onclick="" title="Button"></button> 
+            <button onclick="" title="Button"></button> 
+            <button onclick="" title="Button"></button>
+            <button onclick="" title="Button"></button> 
+            <button onclick="" title="Button"></button> 
             <button onclick="" title="Button"></button>      
         </div>
+
+        <div id="evolutions"></div>
+
         <p id="error-message" class="error" style="display:none;">¡Pokémon no encontrado!</p>
     </div>
 
@@ -245,10 +368,8 @@
                 document.getElementById("pokemon-name").textContent = data.name.toUpperCase();
                 document.getElementById("height").textContent = data.height / 10 + ' m';
                 document.getElementById("weight").textContent = data.weight / 10 + ' kg';
-                document.getElementById("ability").textContent = data.abilities[0].ability.name;
 
                 displayTypes(data.types);
-                displayStats(data.stats);
                 fetchSpecies(id);
             }
         }
