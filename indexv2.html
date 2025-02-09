@@ -1,0 +1,345 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Pokédex</title>
+    <style>
+        body {
+            background-color: #5c0000;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+        }
+
+        .pokedex-leftside {
+            width: 380px;
+            height: 480px;
+            background: linear-gradient(135deg, #000000, #0099ff);
+            border-radius: 20px;
+            box-shadow: 0 10px 10px rgba(0, 0, 0, 0.5);
+            display: flex;
+            flex-direction: column;
+            padding: 10px;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .pokedex-rightside {
+            width: 400px;
+            height: 380px;
+            background: linear-gradient(135deg, #000000, #0099ff);
+            border-radius: 20px;
+            box-shadow: 0 10px 10px rgba(0, 0, 0, 0.5);
+            display: flex;
+            flex-direction: column;
+            padding: 10px;
+            position: relative;
+            overflow: hidden;
+        }
+
+
+        #search-container {
+            width: 100%;
+            margin-bottom: 15px;
+            display: flex;
+            justify-content: center;
+        }
+
+        #search-container input {
+            width: 85%;
+            padding: 8px 15px;
+            border-radius: 15px;
+            border: none;
+            font-size: 16px;
+            box-shadow: 0 2px 10px rgba(0, 0, 0, 0.3);
+        }
+
+        #search-container input:focus {
+            outline: none;
+            border: 2px solid #ff4c00;
+        }
+
+        .screen {
+            padding: 90px;
+            box-shadow: inset 0 0 20px rgba(0, 0, 0, 0.5);
+            overflow: hidden;
+            align-items: center;
+            width: 310px;  /* Ancho de la pantalla */
+            height: 200px; /* Alto de la pantalla */
+            background-color: black;
+            color: white;
+            border-radius: 5px;
+            margin-bottom: 20px;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+        }
+
+        .screen img {
+            width: 300px;
+            height: 300px;
+            transition: all 0.3s ease-in-out;
+        }
+
+
+        .name-screen {
+            margin-top: 20px;
+            color: black;
+            background-color: rgb(255, 174, 0);
+            font-size: 16px;
+            border-style: 1px black solid;
+            border-radius: 20px;
+            border-color: #000000;
+        }
+
+        .name-screen ul {
+            list-style-type: none;
+            padding: 0;
+        }
+
+        .buttons {
+            display: flex;
+            justify-content: space-between;
+            margin-top: 10px;
+            width: 100%;
+        }
+
+        .buttons button {
+            background-color: #1d1d1d;
+            color: white;
+            padding: 10px 15px;
+            border: none;
+            border-radius: 50%;
+            font-size: 20px;
+            cursor: pointer;
+            transition: transform 0.2s, background-color 0.3s;
+        }
+
+        .buttons button:hover {
+            background-color: #444;
+            transform: scale(1.1);
+        }
+
+
+
+        .info-screen {
+            padding: 90px;
+            box-shadow: inset 0 0 20px rgba(0, 0, 0, 0.5);
+            overflow: hidden;
+            align-items: center;
+            width: 200px;  /* Ancho de la pantalla */
+            height: 60px; /* Alto de la pantalla */
+            background-color: green;
+            color: black;
+            border-radius: 5px;
+            margin-bottom: 20px;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+        }
+
+        .info-screen p {
+            font-size: 28px;
+            margin-bottom: 10px;
+            font-size: 10px;
+        }
+
+        .info-screen b {
+            color: #ff4c00;
+        }
+
+        .info-screen ul {
+            list-style-type: none;
+            padding: 0;
+        }
+
+    
+
+        .types {
+            display: flex;
+            gap: 8px;
+            margin-top: 10px;
+        }
+
+        .type {
+            background-color: #4d4d4d;
+            color: white;
+            padding: 5px 12px;
+            border-radius: 20px;
+            font-size: 14px;
+        }
+
+        .error {
+            color: red;
+            font-weight: bold;
+        }
+
+     
+
+        
+       
+
+        #evolutions {
+            display: flex;
+            justify-content: center;
+            gap: 10px;
+            margin-top: 20px;
+        }
+
+        #evolutions img {
+            width: 50px;
+            height: 50px;
+        }
+
+    </style>
+</head>
+<body>
+    <div class="pokedex-leftside">
+        <div class="screen">
+            <img id="pokemon-img" src="" alt="Pokemon">
+        </div>
+        <div class="name-screen">
+            <h2 id="pokemon-name">Cargando...</h2>
+        </div>
+        <div class="buttons">
+            <button onclick="prevPokemon()">◀️</button>
+            <button onclick="nextPokemon()">▶️</button>
+        </div>
+        <p id="error-message" class="error" style="display:none;">¡Pokémon no encontrado!</p>
+    </div>
+
+    <div class="pokedex-rightside">
+        <div id="search-container">
+            <input type="text" id="pokemon-search" placeholder="Buscar Pokémon..." onkeyup="searchPokemon(event)">
+        </div>
+        <div class="info-screen">
+                <p id="pokemon-desc">Descripción...</p>
+                <div class="types" id="pokemon-types"></div>
+                <p><b>Altura:</b> <span id="height"></span></p>
+                <p><b>Peso:</b> <span id="weight"></span></p>
+                <p><span id="ability"></span></p>
+                <ul id="stats-list"></ul>
+        </div>
+
+       
+        <h3>Evoluciones:</h3>
+        <div id="evolutions"></div>
+        <div class="buttons">
+           
+        </div>
+        <p id="error-message" class="error" style="display:none;">¡Pokémon no encontrado!</p>
+    </div>
+
+    <script>
+        let currentId = 1;
+
+        async function fetchPokemon(id) {
+            const response = await fetch(`https://pokeapi.co/api/v2/pokemon/${id}`);
+            const data = await response.json();
+
+            if (data) {
+                document.getElementById("pokemon-img").src = data.sprites.front_default;
+                document.getElementById("pokemon-name").textContent = data.name.toUpperCase();
+                document.getElementById("height").textContent = data.height / 10 + ' m';
+                document.getElementById("weight").textContent = data.weight / 10 + ' kg';
+                document.getElementById("ability").textContent = data.abilities[0].ability.name;
+
+                displayTypes(data.types);
+                displayStats(data.stats);
+                fetchSpecies(id);
+            }
+        }
+
+        function displayTypes(types) {
+            const typesContainer = document.getElementById("pokemon-types");
+            typesContainer.innerHTML = "";
+            types.forEach(type => {
+                let typeElem = document.createElement("span");
+                typeElem.textContent = type.type.name;
+                typeElem.classList.add("type");
+                typesContainer.appendChild(typeElem);
+            });
+        }
+
+        function displayStats(stats) {
+            const statsList = document.getElementById("stats-list");
+            statsList.innerHTML = "";
+            stats.forEach(stat => {
+                let statElem = document.createElement("li");
+                statElem.textContent = `${stat.stat.name}: ${stat.base_stat}`;
+                statsList.appendChild(statElem);
+            });
+        }
+
+        async function fetchSpecies(id) {
+            const response = await fetch(`https://pokeapi.co/api/v2/pokemon-species/${id}/`);
+            const data = await response.json();
+            const descriptionEntry = data.flavor_text_entries.find(entry => entry.language.name === "es");
+            document.getElementById("pokemon-desc").textContent = descriptionEntry ? descriptionEntry.flavor_text : "Sin descripción.";
+            fetchEvolutions(data.evolution_chain.url);
+        }
+
+        async function fetchEvolutions(url) {
+            const response = await fetch(url);
+            const data = await response.json();
+            const evoContainer = document.getElementById("evolutions");
+            evoContainer.innerHTML = "";
+            let evoChain = data.chain;
+
+            while (evoChain) {
+                let pokeName = evoChain.species.name;
+                let pokeData = await fetch(`https://pokeapi.co/api/v2/pokemon/${pokeName}/`).then(res => res.json());
+                let img = document.createElement("img");
+                img.src = pokeData.sprites.front_default;
+                img.alt = pokeName;
+                img.style.width = "50px";
+                img.style.margin = "5px";
+                evoContainer.appendChild(img);
+                evoChain = evoChain.evolves_to.length ? evoChain.evolves_to[0] : null;
+            }
+        }
+
+        function nextPokemon() {
+            if (currentId < 151) {
+                currentId++;
+                fetchPokemon(currentId);
+            }
+        }
+
+        function prevPokemon() {
+            if (currentId > 1) {
+                currentId--;
+                fetchPokemon(currentId);
+            }
+        }
+
+        function searchPokemon(event) {
+            const searchTerm = event.target.value.toLowerCase();
+            if (searchTerm) {
+                fetchPokemonByName(searchTerm);
+            } else {
+                fetchPokemon(currentId);
+                document.getElementById("error-message").style.display = "none";
+            }
+        }
+
+        async function fetchPokemonByName(name) {
+            try {
+                const response = await fetch(`https://pokeapi.co/api/v2/pokemon/${name}`);
+                const data = await response.json();
+                currentId = data.id;
+                fetchPokemon(currentId);
+                document.getElementById("error-message").style.display = "none";
+            } catch (error) {
+                document.getElementById("error-message").style.display = "block";
+            }
+        }
+
+        fetchPokemon(currentId);
+    </script>
+</body>
+</html>
