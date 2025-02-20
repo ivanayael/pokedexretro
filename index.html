@@ -75,6 +75,20 @@
             width: 150px;
             height: 150px;
         }
+        
+
+        .screen-evolutions {
+            width: 430px;
+            height: 100px;
+            background-color: black;
+            color: white;
+            border-radius: 5px;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            margin: 5px auto;
+            border: 5px solid grey; /* Agrega un borde gris de 5px */
+        }
 
         .name-screen {
             text-align: center;
@@ -238,9 +252,12 @@
                 <img id="pokemon-img" src="" alt="Pokemon">
             </div>
             <div class="name-screen">
-                <h2 id="pokemon-name">Cargando...</h2>
+                <h2 id="pokemon-name">Loading...</h2>
             </div>
-            <div id="evolutions">Evolution Data Unavailable</div>
+            <div class="screen-evolutions">
+                <div id="evolutions">No Evolution Data</div>
+            </div>
+            
             <div class="buttons">
                 <button onclick="prevPokemon()">◀️</button>
                 <button onclick="nextPokemon()">▶️</button>
